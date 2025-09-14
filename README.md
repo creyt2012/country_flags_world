@@ -17,7 +17,19 @@ A powerful Flutter package for displaying country flags using images from flagcd
 
 ## Installation
 
+### Option 1: GitHub Packages (Recommended)
+
 Add this to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  country_flags_world:
+    git:
+      url: https://github.com/creyt2012/country_flags_world.git
+      ref: v2.0.3
+```
+
+### Option 2: Pub.dev (if available)
 
 ```yaml
 dependencies:
