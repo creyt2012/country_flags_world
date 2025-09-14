@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'country_helper.dart';
 import 'flag_size.dart';
+import 'flag_shape.dart';
 import 'shimmer_widget.dart';
 
 /// A widget that displays a country flag using images from flagcdn.com
@@ -65,6 +66,9 @@ class CountryFlag extends StatelessWidget {
   /// Whether to use SVG format (sharp at any size). If false, uses PNG.
   final bool useSvg;
 
+  /// The shape of the flag
+  final FlagShape shape;
+
   const CountryFlag({
     super.key,
     required this.countryCode,
@@ -83,6 +87,7 @@ class CountryFlag extends StatelessWidget {
     this.validateCountryCode = true,
     this.invalidCountryCodeMessage,
     this.useSvg = false,
+    this.shape = FlagShape.rectangle,
   });
 
   /// Creates a CountryFlag with small size (20x13)
@@ -101,6 +106,7 @@ class CountryFlag extends StatelessWidget {
     this.validateCountryCode = true,
     this.invalidCountryCodeMessage,
     this.useSvg = false,
+    this.shape = FlagShape.rectangle,
   }) : width = 20,
        height = 13,
        flagSize = FlagSize.small;
@@ -121,6 +127,7 @@ class CountryFlag extends StatelessWidget {
     this.validateCountryCode = true,
     this.invalidCountryCodeMessage,
     this.useSvg = false,
+    this.shape = FlagShape.rectangle,
   }) : width = 40,
        height = 27,
        flagSize = FlagSize.medium;
@@ -141,6 +148,7 @@ class CountryFlag extends StatelessWidget {
     this.validateCountryCode = true,
     this.invalidCountryCodeMessage,
     this.useSvg = false,
+    this.shape = FlagShape.rectangle,
   }) : width = 80,
        height = 53,
        flagSize = FlagSize.large;
@@ -161,6 +169,7 @@ class CountryFlag extends StatelessWidget {
     this.validateCountryCode = true,
     this.invalidCountryCodeMessage,
     this.useSvg = false,
+    this.shape = FlagShape.rectangle,
   }) : width = 160,
        height = 107,
        flagSize = FlagSize.extraLarge;
@@ -194,28 +203,67 @@ class CountryFlag extends StatelessWidget {
       width: width,
       height: height,
       decoration: decoration,
-      child: ClipRRect(
-        borderRadius: borderRadius ?? BorderRadius.zero,
-        child: useSvg
-            ? SvgPicture.network(
-                _flagUrl,
-                width: width,
-                height: height,
-                fit: fit ?? BoxFit.cover,
-                placeholderBuilder: (context) => _buildPlaceholder(),
-              )
-            : CachedNetworkImage(
-                imageUrl: _flagUrl,
-                width: width,
-                height: height,
-                fit: fit ?? BoxFit.cover,
-                placeholder: (context, url) => _buildPlaceholder(),
-                errorWidget: (context, url, error) => _buildErrorWidget(),
-                memCacheWidth: width?.toInt(),
-                memCacheHeight: height?.toInt(),
-              ),
-      ),
+      child: _buildFlagContent(),
     );
+  }
+
+  /// Builds the flag content with appropriate shape
+  Widget _buildFlagContent() {
+    final effectiveBorderRadius = borderRadius ?? shape.getBorderRadius(width, height);
+    final clipBehavior = shape.getClipBehavior();
+    final transform = shape.getTransform();
+    final aspectRatio = shape.getAspectRatio();
+    
+    Widget flagWidget = useSvg
+        ? SvgPicture.network(
+            _flagUrl,
+            width: width,
+            height: height,
+            fit: fit ?? BoxFit.cover,
+            placeholderBuilder: (context) => _buildPlaceholder(),
+          )
+        : CachedNetworkImage(
+            imageUrl: _flagUrl,
+            width: width,
+            height: height,
+            fit: fit ?? BoxFit.cover,
+            placeholder: (context, url) => _buildPlaceholder(),
+            errorWidget: (context, url, error) => _buildErrorWidget(),
+            memCacheWidth: width?.toInt(),
+            memCacheHeight: height?.toInt(),
+          );
+
+    // Apply aspect ratio if needed
+    if (aspectRatio != null) {
+      flagWidget = AspectRatio(
+        aspectRatio: aspectRatio,
+        child: flagWidget,
+      );
+    }
+
+    // Apply transform if needed
+    if (transform != null) {
+      flagWidget = Transform(
+        transform: transform,
+        child: flagWidget,
+      );
+    }
+
+    // Apply clipping
+    if (effectiveBorderRadius != null) {
+      return ClipRRect(
+        borderRadius: effectiveBorderRadius,
+        clipBehavior: clipBehavior,
+        child: flagWidget,
+      );
+    } else if (shape == FlagShape.circle) {
+      return ClipOval(
+        clipBehavior: clipBehavior,
+        child: flagWidget,
+      );
+    } else {
+      return flagWidget;
+    }
   }
 
   /// Builds the placeholder widget

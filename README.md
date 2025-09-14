@@ -21,7 +21,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  country_flags_world: ^2.0.2
+  country_flags_world: ^2.0.3
 ```
 
 Then run:
@@ -181,6 +181,77 @@ List<String> sizes = CountryHelper.availableFlagSizes;
 CountryFlag(
   countryCode: 'us',
   useSvg: true, // dùng SVG để hiển thị sắc nét ở mọi kích thước
+)
+```
+
+### Country Flag with Name (mới)
+
+```dart
+// Hiển thị cờ cùng tên quốc gia
+CountryFlagWithName(
+  countryCode: 'us',
+  flagWidth: 40,
+  flagHeight: 27,
+)
+
+// Layout dọc
+CountryFlagWithName(
+  countryCode: 'vn',
+  direction: Axis.vertical,
+  alignment: MainAxisAlignment.center,
+)
+
+// Tùy chỉnh style text
+CountryFlagWithName(
+  countryCode: 'fr',
+  countryNameStyle: TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Colors.blue,
+  ),
+  spacing: 12.0,
+)
+
+// Các kích thước có sẵn
+CountryFlagWithName.small(countryCode: 'us')
+CountryFlagWithName.medium(countryCode: 'vn')
+CountryFlagWithName.large(countryCode: 'fr')
+CountryFlagWithName.extraLarge(countryCode: 'de')
+```
+
+### Flag Shapes (mới)
+
+```dart
+// Hình chữ nhật (mặc định)
+CountryFlag(countryCode: 'us', shape: FlagShape.rectangle)
+
+// Hình tròn
+CountryFlag(countryCode: 'vn', shape: FlagShape.circle)
+
+// Hình vuông
+CountryFlag(countryCode: 'fr', shape: FlagShape.square)
+
+// Hình vuông bo tròn
+CountryFlag(countryCode: 'de', shape: FlagShape.roundedSquare)
+
+// Hình chữ nhật bo tròn
+CountryFlag(countryCode: 'jp', shape: FlagShape.rounded)
+
+// Hình stadium (bo tròn nhiều)
+CountryFlag(countryCode: 'it', shape: FlagShape.stadium)
+
+// Hình kim cương
+CountryFlag(countryCode: 'es', shape: FlagShape.diamond)
+
+// Hình kim cương bo tròn
+CountryFlag(countryCode: 'ca', shape: FlagShape.roundedDiamond)
+
+// Kết hợp với tên quốc gia
+CountryFlagWithName(
+  countryCode: 'us',
+  shape: FlagShape.circle,
+  flagWidth: 60,
+  flagHeight: 60,
 )
 ```
 

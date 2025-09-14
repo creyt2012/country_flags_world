@@ -1,4 +1,22 @@
 # Changelog
+
+## [2.0.3] - 2024-12-19
+
+### Added
+- **CountryFlagWithName Widget**: New widget that displays country flag with country name
+- **Enhanced Layout Options**: Support for horizontal and vertical layouts
+- **Customizable Text Styling**: Full control over country name appearance
+- **Flexible Spacing**: Configurable spacing between flag and country name
+- **Multiple Constructor Variants**: Small, medium, large, and extra large variants
+- **Flag Shapes**: 8 different flag shapes (rectangle, circle, square, rounded, stadium, diamond, etc.)
+- **Shape System**: Flexible shape system with automatic border radius and clipping
+- **Shape Integration**: Full shape support in both CountryFlag and CountryFlagWithName widgets
+
+### Updated
+- **Repository Links**: Updated to point to the correct GitHub repository
+- **Package Description**: Enhanced description for better pub.dev visibility
+- **Version Bump**: Updated to version 2.0.3
+
 ## [2.0.2] - 2025-09-12
 
 ### Changed

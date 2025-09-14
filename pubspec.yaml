@@ -1,8 +1,8 @@
 name: country_flags_world
-description: A Flutter package for displaying country flags using images from flagcdn.com
-version: 2.0.2
-homepage: https://github.com/algonest/flutter_country_flags
-repository: https://github.com/algonest/flutter_country_flags
+description: A Flutter package for displaying country flags using images from flagcdn.com with advanced features and optimizations
+version: 2.0.3
+homepage: https://github.com/creyt2012/country_flags_world
+repository: https://github.com/creyt2012/country_flags_world
 
 environment:
   sdk: '>=3.5.0 <4.0.0'

@@ -261,4 +261,168 @@ void main() {
       expect(FlagSize.large.aspectRatio, equals(3 / 2));
     });
   });
+
+  group('CountryFlagWithName', () {
+    testWidgets('should display flag with country name', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlagWithName(countryCode: 'us'),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlagWithName), findsOneWidget);
+      expect(find.text('United States'), findsOneWidget);
+    });
+
+    testWidgets('should display small flag with name', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlagWithName.small(countryCode: 'vn'),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlagWithName), findsOneWidget);
+      expect(find.text('Vietnam'), findsOneWidget);
+    });
+
+    testWidgets('should hide country name when showCountryName is false', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlagWithName(
+              countryCode: 'us',
+              showCountryName: false,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlagWithName), findsOneWidget);
+      expect(find.text('United States'), findsNothing);
+    });
+
+    testWidgets('should display vertical layout', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlagWithName(
+              countryCode: 'us',
+              direction: Axis.vertical,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlagWithName), findsOneWidget);
+      expect(find.text('United States'), findsOneWidget);
+    });
+  });
+
+  group('FlagShape', () {
+    test('should have correct display names', () {
+      expect(FlagShape.rectangle.displayName, equals('Rectangle'));
+      expect(FlagShape.circle.displayName, equals('Circle'));
+      expect(FlagShape.square.displayName, equals('Square'));
+      expect(FlagShape.rounded.displayName, equals('Rounded'));
+      expect(FlagShape.stadium.displayName, equals('Stadium'));
+      expect(FlagShape.diamond.displayName, equals('Diamond'));
+      expect(FlagShape.roundedDiamond.displayName, equals('Rounded Diamond'));
+    });
+
+    test('should return correct border radius', () {
+      expect(FlagShape.rectangle.getBorderRadius(80, 53), isNull);
+      expect(FlagShape.rounded.getBorderRadius(80, 53), isA<BorderRadius>());
+      expect(FlagShape.circle.getBorderRadius(80, 53), isA<BorderRadius>());
+      expect(FlagShape.square.getBorderRadius(80, 53), isNull);
+    });
+
+    test('should return correct aspect ratio', () {
+      expect(FlagShape.rectangle.getAspectRatio(), isNull);
+      expect(FlagShape.circle.getAspectRatio(), equals(1.0));
+      expect(FlagShape.square.getAspectRatio(), equals(1.0));
+      expect(FlagShape.roundedSquare.getAspectRatio(), equals(1.0));
+    });
+
+    test('should return correct clip behavior', () {
+      expect(FlagShape.rectangle.getClipBehavior(), equals(Clip.antiAlias));
+      expect(FlagShape.circle.getClipBehavior(), equals(Clip.antiAlias));
+      expect(FlagShape.diamond.getClipBehavior(), equals(Clip.antiAlias));
+    });
+
+    test('should return transform for diamond shapes', () {
+      expect(FlagShape.rectangle.getTransform(), isNull);
+      expect(FlagShape.diamond.getTransform(), isA<Matrix4>());
+      expect(FlagShape.roundedDiamond.getTransform(), isA<Matrix4>());
+    });
+  });
+
+  group('Flag Shapes in CountryFlag', () {
+    testWidgets('should display rectangle flag', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlag(
+              countryCode: 'us',
+              shape: FlagShape.rectangle,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlag), findsOneWidget);
+    });
+
+    testWidgets('should display circle flag', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlag(
+              countryCode: 'vn',
+              shape: FlagShape.circle,
+              width: 60,
+              height: 60,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlag), findsOneWidget);
+    });
+
+    testWidgets('should display square flag', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlag(
+              countryCode: 'fr',
+              shape: FlagShape.square,
+              width: 60,
+              height: 60,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlag), findsOneWidget);
+    });
+
+    testWidgets('should display rounded flag', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CountryFlag(
+              countryCode: 'de',
+              shape: FlagShape.rounded,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(CountryFlag), findsOneWidget);
+    });
+  });
 } 
