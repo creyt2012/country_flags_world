@@ -1,0 +1,28 @@
+name: country_flags_world
+description: A Flutter package for displaying country flags using images from flagcdn.com
+version: 2.0.2
+homepage: https://github.com/algonest/flutter_country_flags
+repository: https://github.com/algonest/flutter_country_flags
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  cached_network_image: ^3.3.1
+  flutter_svg: ^2.0.10+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  mockito: ^5.4.4
+
+flutter:
+  # No assets needed - using network images
+
+# Copyright: Perpetual, unlimited use granted (Bản quyền sử dụng vĩnh viễn)
+# Author: Nguyen Thanh Bien (Nguyễn Thành Biên) - mortarcloud@gmail.com - https://algonest.io.vn 
